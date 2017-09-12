@@ -1,5 +1,3 @@
-using System;
-
 namespace ImageManager.Models
 {
     public class ErrorViewModel

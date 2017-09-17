@@ -14,6 +14,12 @@ namespace ImageManager.Data
 
         public DbSet<User> Users { get; set; }
 
+        public DbSet<Category> Categories { get; set; }
+
+        public DbSet<Album> Albums { get; set; }
+
+        public DbSet<Image> Images { get; set; }
+
         public override int SaveChanges()
         {
             AddTimestamps();

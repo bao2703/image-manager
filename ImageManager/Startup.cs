@@ -1,4 +1,5 @@
 ﻿using ImageManager.Data;
+using ImageManager.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,11 @@ namespace ImageManager
         {
             services.AddDbContext<NeptuneContext>(options => options.UseSqlite("Data Source=neptune.db"));
             services.AddMvc();
+
+            services.AddTransient<UserService>();
+            services.AddTransient<CategoryService>();
+            services.AddTransient<AlbumService>();
+            services.AddTransient<ImageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -29,7 +35,7 @@ namespace ImageManager
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                //app.UseBrowserLink();
+                app.UseBrowserLink();
             }
             else
             {

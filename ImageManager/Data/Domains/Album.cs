@@ -10,8 +10,6 @@ namespace ImageManager.Data.Domains
 
         public User User { get; set; }
 
-        public Category Category { get; set; }
-
         public List<Image> Images { get; set; }
     }
 }

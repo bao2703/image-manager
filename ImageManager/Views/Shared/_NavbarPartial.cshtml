@@ -1,13 +1,16 @@
 ﻿<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
     <a class="navbar-brand" asp-action="Index" asp-controller="Home">Neptune</a>
-    <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarColapse" aria-controls="navbarColapse" aria-expanded="false">
+    <button class="navbar-toggler" data-toggle="collapse" data-target="#navbar-colapse">
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarColapse">
+    <div class="collapse navbar-collapse text-white" id="navbar-colapse">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" asp-action="Index" asp-controller="Home">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-action="Index" asp-controller="Album">My Albums</a>
             </li>
         </ul>
         <form class="form-inline mr-2">

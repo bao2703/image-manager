@@ -13,8 +13,6 @@ namespace ImageManager.Data
         {
         }
 
-        public DbSet<Category> Categories { get; set; }
-
         public DbSet<Album> Albums { get; set; }
 
         public DbSet<Image> Images { get; set; }

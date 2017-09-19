@@ -34,9 +34,9 @@ namespace ImageManager
             services.AddSession();
 
             services.AddTransient<UserService>();
-            services.AddTransient<CategoryService>();
             services.AddTransient<AlbumService>();
             services.AddTransient<ImageService>();
+            services.AddTransient<UnitOfWork>();
             services.AddTransient<Seeder>();
 
             var userOptions = new UserOptions {RequireUniqueEmail = true};

@@ -1,14 +1,11 @@
 ﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
 
 namespace ImageManager.Data.Domains
 {
-    public class User : Entity
+    public class User : IdentityUser
     {
         public string Name { get; set; }
-
-        public string UserName { get; set; }
-
-        public string Password { get; set; }
 
         public List<Category> Categories { get; set; }
 

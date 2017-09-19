@@ -1,16 +1,24 @@
-﻿using ImageManager.Models.Account;
+﻿using System.Threading.Tasks;
+using ImageManager.Data.Domains;
+using ImageManager.Models.Account;
 using ImageManager.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ImageManager.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<User> _userManager;
         private readonly UserService _userService;
 
-        public AccountController(UserService userService)
+        public AccountController(UserService userService, UserManager<User> userManager,
+            SignInManager<User> signInManager)
         {
             _userService = userService;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         [HttpGet]
@@ -20,9 +28,19 @@ namespace ImageManager.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(AccountViewModel model)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                return View(model);
+            }
+            return View(model);
         }
 
         [HttpGet]
@@ -32,9 +50,39 @@ namespace ImageManager.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register(AccountViewModel model)
+        public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                var user = new User
+                {
+                    UserName = model.UserName,
+                    Email = model.Email
+                };
+                var result = await _userManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    await _signInManager.SignInAsync(user, false);
+                    return RedirectToAction("Index", "Home");
+                }
+                AddErrors(result);
+            }
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+
+        private void AddErrors(IdentityResult result)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
         }
     }
 }

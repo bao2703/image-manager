@@ -3,15 +3,18 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ImageManager.Models.Account
 {
-    public class AccountViewModel
+    public class RegisterViewModel
     {
         [Required]
         public string Name { get; set; }
 
         [Required]
-        [EmailAddress]
         [DisplayName("User name")]
         public string UserName { get; set; }
+
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -22,5 +25,16 @@ namespace ImageManager.Models.Account
         [DisplayName("Confirm password")]
         [Compare(nameof(Password), ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+    }
+
+    public class LoginViewModel
+    {
+        [Required]
+        [DisplayName("User name")]
+        public string UserName { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
     }
 }

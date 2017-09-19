@@ -2,17 +2,16 @@
 using System.Linq;
 using System.Threading.Tasks;
 using ImageManager.Data.Domains;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace ImageManager.Data
 {
-    public class NeptuneContext : DbContext
+    public class NeptuneContext : IdentityDbContext<User>
     {
         public NeptuneContext(DbContextOptions options) : base(options)
         {
         }
-
-        public DbSet<User> Users { get; set; }
 
         public DbSet<Category> Categories { get; set; }
 

@@ -4,12 +4,11 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using ImageManager.Data;
-using ImageManager.Data.Domains;
 using Microsoft.EntityFrameworkCore;
 
 namespace ImageManager.Services
 {
-    public class Service<TEntity> where TEntity : Entity
+    public class Service<TEntity> where TEntity : class
     {
         protected readonly NeptuneContext Context;
 

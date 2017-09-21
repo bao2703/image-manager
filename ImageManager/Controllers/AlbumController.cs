@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ImageManager.Controllers
 {
+    [Authorize]
     public class AlbumController : Controller
     {
         private readonly AlbumService _albumService;
@@ -19,11 +20,23 @@ namespace ImageManager.Controllers
             _userManager = userManager;
         }
 
-        [Authorize]
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(User);
             var model = _albumService.GetUserAlbums(user.Id).ToList();
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(Album model)
+        {
             return View(model);
         }
     }

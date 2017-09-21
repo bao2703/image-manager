@@ -1,9 +1,11 @@
 ﻿using System.Diagnostics;
 using ImageManager.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ImageManager.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         public IActionResult Index()

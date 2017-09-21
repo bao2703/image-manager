@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ImageManager.Controllers
 {
+    [Authorize]
     public class ImageController : Controller
     {
         private readonly ImageService _imageService;
@@ -21,7 +22,6 @@ namespace ImageManager.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> Index(int? albumId)
         {
             var user = await _userManager.GetUserAsync(User);

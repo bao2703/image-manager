@@ -2,6 +2,7 @@
 using ImageManager.Data.Domains;
 using ImageManager.Models.Account;
 using ImageManager.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -71,6 +72,7 @@ namespace ImageManager.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();

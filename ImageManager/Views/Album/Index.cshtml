@@ -9,13 +9,25 @@
 }
 
 <div class="row">
+    <div class="col-6 col-md-3 col-lg-2 mb-3">
+        <a href="#">
+            <div class="card" style="cursor: pointer">
+                <div class="" style="background-color: gray; height: 221px"></div>
+                <div class="card-img-overlay p-0 d-block">
+                    <div class="img-detail text-white p-2 text-center" style="height: 130px">
+                        <i class="fa fa-plus"></i> Create new albums
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
     @foreach (var item in Model)
     {
         <div class="col-6 col-md-3 col-lg-2 mb-3">
             <a asp-action="Index" asp-controller="Image" asp-route-albumId="@item.Id">
                 <div class="card" style="cursor: pointer">
                     <img class="card-img-top img-fluid" src="@item.Images?.FirstOrDefault()?.Path" alt="@item.Name">
-                    <div class="card-img-overlay p-0" style="display: block">
+                    <div class="card-img-overlay p-0 d-block">
                         <div class="img-detail text-white p-2">
                             <div>@item.Name</div>
                             <div class="img-description">@item.Description</div>

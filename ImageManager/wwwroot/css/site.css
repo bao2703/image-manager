@@ -1,0 +1,14 @@
+﻿.navbar-nav > .nav-item > .nav-link { color: white; }
+
+.card-img-overlay { top: auto; }
+
+.card-img-overlay > .img-detail { background: linear-gradient(transparent, rgba(0, 0, 0, 20)); }
+
+.img-detail > .img-description {
+    color: gainsboro;
+    font-size: 70%;
+}
+
+.card > .card-img-overlay { display: none; }
+
+.card:hover > .card-img-overlay { display: block; }

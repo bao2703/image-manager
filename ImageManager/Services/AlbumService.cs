@@ -17,7 +17,7 @@ namespace ImageManager.Services
             return DbSet.Include(x => x.Images);
         }
 
-        public IEnumerable<Album> GetAll(string userId)
+        public IEnumerable<Album> GetUserAlbums(string userId)
         {
             return DbSet.Include(x => x.Images).Where(x => x.User.Id == userId);
         }

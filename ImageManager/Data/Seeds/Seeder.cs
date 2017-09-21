@@ -22,6 +22,7 @@ namespace ImageManager.Data.Seeds
 
             var imageFaker = new Faker<Image>()
                 .RuleFor(o => o.Path, f => f.Internet.Avatar())
+                .RuleFor(o => o.Name, f => f.Person.FirstName)
                 .RuleFor(o => o.Description, f => f.Lorem.Sentence());
 
             var albumFaker = new Faker<Album>()
@@ -37,10 +38,9 @@ namespace ImageManager.Data.Seeds
             var users = userFaker.Generate(100).ToList();
             users[0].UserName = "admin";
             users[0].Albums = albumFaker.Generate(10).ToList();
-            users[0].Images = imageFaker.Generate(100).ToList();
             users.ForEach(async x => await _userManager.CreateAsync(x, "123"));
 
-            await context.SaveChangesAsync();
+            //await context.SaveChangesAsync();
         }
     }
 }

@@ -23,7 +23,7 @@ namespace ImageManager.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(User);
-            var model = _albumService.GetAll(user.Id).ToList();
+            var model = _albumService.GetUserAlbums(user.Id).ToList();
             return View(model);
         }
     }

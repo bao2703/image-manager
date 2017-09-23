@@ -1,0 +1,33 @@
+﻿@model Album
+
+@{
+    ViewData["Title"] = "Create Album";
+}
+
+@section Header {
+    @await Html.PartialAsync("_HeaderPartial", ViewData["Title"])
+}
+<form asp-action="Create" enctype="multipart/form-data" method="post">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Name" class="form-control-label"></label>
+                <input asp-for="Name" class="form-control"/>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="form-control-label">Description</label>
+                <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label"></label>
+                <input type="file" multiple class="form-control-file" name="files">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn btn-primary">Submit</button>
+                <button type="reset" class="btn btn btn-danger">Clear</button>
+            </div>
+        </div>
+    </div>
+</form>

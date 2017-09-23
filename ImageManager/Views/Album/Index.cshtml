@@ -8,13 +8,26 @@
     @await Html.PartialAsync("_HeaderPartial", "My Albums")
 }
 
+<div class="row mb-4">
+    <div class="col-md-12">
+        <a asp-action="Create" asp-controller="Album" class="btn btn-primary">
+            <i class="fa fa-plus"></i>
+            Create new Album
+        </a>
+        <a asp-action="Edit" asp-controller="Album" class="btn btn-info">
+            <i class="fa fa-edit"></i>
+            Edit
+        </a>
+    </div>
+</div>
+
 <div class="row">
     @foreach (var item in Model)
     {
         <div class="col-6 col-md-3 col-lg-2 mb-3">
             <a asp-action="Index" asp-controller="Image" asp-route-albumId="@item.Id">
-                <div class="card" style="cursor: pointer">
-                    <img class="card-img-top img-fluid" src="@item.Images?.FirstOrDefault()?.Path" alt="@item.Name">
+                <div class="card cusor-pointer">
+                    <img class="card-img-top img-fluid" src="@item.Images?.FirstOrDefault()?.Path" alt="@item.Name" style="height: 221px">
                     <div class="card-img-overlay p-0 d-block">
                         <div class="img-detail text-white p-2">
                             <div>@item.Name</div>

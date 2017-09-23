@@ -85,7 +85,7 @@ namespace ImageManager
 
             app.UseMvcWithDefaultRoute();
 
-            await seeder.InitializeAsync(context);
+            //await seeder.InitializeAsync(context);
         }
     }
 }

@@ -14,3 +14,7 @@
 .card:hover > .card-img-overlay { display: block; }
 
 .cusor-pointer { cursor: pointer; }
+
+label:before { position: absolute; }
+
+:checked + label:before { content: url("../check.png"); }

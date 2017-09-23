@@ -27,7 +27,7 @@
         <div class="col-6 col-md-3 col-lg-2 mb-3">
             <a asp-action="Index" asp-controller="Image" asp-route-albumId="@item.Id">
                 <div class="card cusor-pointer">
-                    <img class="card-img-top img-fluid" src="@item.Images?.FirstOrDefault()?.Path" alt="@item.Name" style="height: 221px">
+                    <img class="card-img-top img-fluid" src="@item.Images?.FirstOrDefault()?.Path" alt="" style="height: 221px" asp-append-version="true">
                     <div class="card-img-overlay p-0 d-block">
                         <div class="img-detail text-white p-2">
                             <div>@item.Name</div>

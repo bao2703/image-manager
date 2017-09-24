@@ -46,11 +46,11 @@ namespace ImageManager.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(int[] selectedImages)
+        public async Task<IActionResult> Delete(int[] selectedItems)
         {
-            foreach (var selected in selectedImages)
+            foreach (var item in selectedItems)
             {
-                var image = _imageService.FindById(selected);
+                var image = _imageService.FindById(item);
                 var path = $"{Constant.RootPath}/{image.Path}";
                 if (System.IO.File.Exists(path))
                 {

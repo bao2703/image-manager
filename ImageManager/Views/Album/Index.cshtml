@@ -10,14 +10,13 @@
 
 <div class="row mb-4">
     <div class="col-md-12">
-        <a asp-action="Create" asp-controller="Album" class="btn btn-primary">
-            <i class="fa fa-plus"></i>
-            Create new Album
-        </a>
-        <a asp-action="Edit" asp-controller="Album" class="btn btn-info">
-            <i class="fa fa-edit"></i>
-            Edit
-        </a>
+        <div class="float-right">
+            <a asp-action="Create" asp-controller="Album" class="btn btn-primary">
+                <i class="fa fa-plus"></i>
+                Create new Album
+            </a>
+            @await Html.PartialAsync("_EditPartial")
+        </div>
     </div>
 </div>
 
@@ -27,7 +26,9 @@
         <div class="col-6 col-md-3 col-lg-2 mb-3">
             <a asp-action="Index" asp-controller="Image" asp-route-albumId="@item.Id">
                 <div class="card cusor-pointer">
-                    <img class="card-img-top img-fluid" src="@item.Images?.FirstOrDefault()?.Path" alt="" style="height: 221px" asp-append-version="true">
+                    <input type="checkbox" id="@item.Id" name="selectedItems" value="@item.Id" hidden/>
+                    <label for="@item.Id" class="m-0"></label>
+                    <img class="card-img-top img-fluid" src="@item.Images?.FirstOrDefault()?.Path" alt="" data-id="@item.Id" style="height: 221px" asp-append-version="true">
                     <div class="card-img-overlay p-0 d-block">
                         <div class="img-detail text-white p-2">
                             <div>@item.Name</div>
@@ -41,3 +42,7 @@
         </div>
     }
 </div>
+
+@section Scripts {
+    <script id="script-edit" src="~/js/edit.js" asp-append-version="true" data-url="@Url.Action("Delete", "Album")"></script>
+}

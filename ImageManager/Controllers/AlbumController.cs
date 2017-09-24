@@ -56,16 +56,33 @@ namespace ImageManager.Controllers
                 using (var stream = new FileStream($"{Constant.RootPath}/{filePath}", FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
-                    model.Images.Add(new Image
-                    {
-                        Path = filePath
-                    });
+                    model.Images.Add(new Image {Path = filePath});
                 }
             }
             model.User = await _userManager.GetUserAsync(User);
             await _albumService.AddAsync(model);
             await _unitOfWork.SaveChangesAsync();
             return RedirectToAction("Index", "Image", new {albumId = model.Id});
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int[] selectedItems)
+        {
+            foreach (var item in selectedItems)
+            {
+                var album = _albumService.FindById(item);
+                album.Images.ForEach(x =>
+                {
+                    var path = $"{Constant.RootPath}/{x.Path}";
+                    if (System.IO.File.Exists(path))
+                    {
+                        System.IO.File.Delete(path);
+                    }
+                });
+                _albumService.Remove(album);
+            }
+            await _unitOfWork.SaveChangesAsync();
+            return Ok();
         }
     }
 }

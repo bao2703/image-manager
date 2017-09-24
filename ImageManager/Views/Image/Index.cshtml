@@ -6,26 +6,13 @@
 
 <div class="row mb-4">
     <div class="col-md-12">
-        <button class="btn btn-primary">
-            <i class="fa fa-plus"></i>
-            Add
-        </button>
-        <button class="btn btn-info" id="btn-edit">
-            <i class="fa fa-edit"></i>
-            Edit
-        </button>
-        <button class="btn btn-success" id="btn-all">
-            <i class="fa fa-check"></i>
-            All
-        </button>
-        <button class="btn btn-danger" id="btn-delete">
-            <i class="fa fa-trash"></i>
-            Delete
-        </button>
-        <button class="btn" id="btn-cancel">
-            <i class="fa fa-edit"></i>
-            Cancel
-        </button>
+        <div class="float-right">
+            <a asp-action="Create" asp-controller="Image" class="btn btn-primary">
+                <i class="fa fa-plus"></i>
+                Add
+            </a>
+            @await Html.PartialAsync("_EditPartial")
+        </div>
     </div>
 </div>
 
@@ -34,10 +21,9 @@
     {
         <div class="col-6 col-md-3 col-lg-2 mb-3">
             <div class="card cusor-pointer">
-                <input type="checkbox" id="@item.Id" name="selectedImages" value="@item.Id" hidden disabled/>
-                <label for="@item.Id" class="m-0">
-                    <img class="card-img-top img-fluid" src="@item.Path" alt="" style="height: 221px" asp-append-version="true">
-                </label>
+                <input type="checkbox" id="@item.Id" name="selectedItems" value="@item.Id" hidden/>
+                <label for="@item.Id" class="m-0"></label>
+                <img class="card-img-top img-fluid" src="@item.Path" alt="" data-id="@item.Id" style="height: 221px" asp-append-version="true">
                 <div class="card-img-overlay p-0">
                     <div class="img-detail text-white p-2">
                         <div>@item.Name</div>
@@ -52,5 +38,5 @@
 </div>
 
 @section Scripts {
-    <script src="~/js/edit-image.js" asp-append-version="true"></script>
+    <script id="script-edit" src="~/js/edit.js" asp-append-version="true" data-url="@Url.Action("Delete", "Image")"></script>
 }

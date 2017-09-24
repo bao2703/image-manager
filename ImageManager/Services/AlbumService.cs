@@ -12,6 +12,11 @@ namespace ImageManager.Services
         {
         }
 
+        public override Album FindById(object id)
+        {
+            return DbSet.Include(x => x.Images).SingleOrDefault(x => x.Id == (int) id);
+        }
+
         public override IEnumerable<Album> GetAll()
         {
             return DbSet.Include(x => x.Images);

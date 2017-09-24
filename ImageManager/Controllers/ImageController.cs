@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ImageManager.Common;
 using ImageManager.Data.Domains;
 using ImageManager.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -13,12 +14,14 @@ namespace ImageManager.Controllers
     public class ImageController : Controller
     {
         private readonly ImageService _imageService;
+        private readonly UnitOfWork _unitOfWork;
         private readonly UserManager<User> _userManager;
 
-        public ImageController(ImageService imageService, UserManager<User> userManager)
+        public ImageController(ImageService imageService, UserManager<User> userManager, UnitOfWork unitOfWork)
         {
             _imageService = imageService;
             _userManager = userManager;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpGet]
@@ -40,6 +43,23 @@ namespace ImageManager.Controllers
             }
 
             return View(model.ToList());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int[] selectedImages)
+        {
+            foreach (var selected in selectedImages)
+            {
+                var image = _imageService.FindById(selected);
+                var path = $"{Constant.RootPath}/{image.Path}";
+                if (System.IO.File.Exists(path))
+                {
+                    System.IO.File.Delete(path);
+                }
+                _imageService.Remove(image);
+            }
+            await _unitOfWork.SaveChangesAsync();
+            return Ok();
         }
     }
 }

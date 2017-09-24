@@ -6,9 +6,17 @@
 
 <div class="row mb-4">
     <div class="col-md-12">
+        <button class="btn btn-primary">
+            <i class="fa fa-plus"></i>
+            Add
+        </button>
         <button class="btn btn-info" id="btn-edit">
             <i class="fa fa-edit"></i>
             Edit
+        </button>
+        <button class="btn btn-success" id="btn-all">
+            <i class="fa fa-check"></i>
+            All
         </button>
         <button class="btn btn-danger" id="btn-delete">
             <i class="fa fa-trash"></i>
@@ -26,8 +34,8 @@
     {
         <div class="col-6 col-md-3 col-lg-2 mb-3">
             <div class="card cusor-pointer">
-                <input type="checkbox" id="@item.Id" hidden disabled/>
-                <label for="@item.Id">
+                <input type="checkbox" id="@item.Id" name="selectedImages" value="@item.Id" hidden disabled/>
+                <label for="@item.Id" class="m-0">
                     <img class="card-img-top img-fluid" src="@item.Path" alt="" style="height: 221px" asp-append-version="true">
                 </label>
                 <div class="card-img-overlay p-0">
@@ -43,53 +51,6 @@
     }
 </div>
 
-
 @section Scripts {
-    <script>
-        var btnDelete = $('#btn-delete');
-        var btnCancel = $('#btn-cancel');
-        var btnEdit = $('#btn-edit');
-        var checkbox = $('input[type=checkbox]');
-        var img = $(".img-fluid");
-        hideBtn();
-
-        btnEdit.click(function() {
-            showBtn();
-            checkbox.attr('disabled', false);
-            img.on('click',
-                function() {
-                    $(this).toggleClass("p-1");
-                });
-        });
-
-        btnDelete.click(function() {
-            $.ajax(function() {
-
-            });
-        });
-
-        btnCancel.click(function() {
-            clear();
-        });
-
-        function hideBtn() {
-            btnDelete.hide();
-            btnCancel.hide();
-            btnEdit.show();
-        }
-
-        function showBtn() {
-            btnDelete.show();
-            btnCancel.show();
-            btnEdit.hide();
-        }
-
-        function clear() {
-            checkbox.prop('checked', false);
-            checkbox.attr('disabled', true);
-            img.removeClass('p-1');
-            img.off('click');
-            hideBtn();
-        }
-    </script>
+    <script src="~/js/edit-image.js" asp-append-version="true"></script>
 }

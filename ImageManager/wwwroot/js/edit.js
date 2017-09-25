@@ -9,11 +9,6 @@ hideBtn();
 
 btnEdit.click(() => {
     showBtn();
-    card.on("click",
-        function() {
-            const currCheck = $(`#${$(this).find("img").data("id")}`);
-            toggleCheckBox(currCheck);
-        });
     aCard.on("click", (event) => event.preventDefault());
 });
 
@@ -37,6 +32,13 @@ function hideBtn() {
     btnDelete.hide();
     btnCancel.hide();
     btnEdit.show();
+    card.off("click");
+    card.on("click",
+        function() {
+            $("#modal").modal("show");
+            $(".carousel-item").removeClass("active");
+            $(`#slide-${$(this).find(".card-img-top").data("id")}`).first().addClass("active");
+        });
 }
 
 function showBtn() {
@@ -44,11 +46,16 @@ function showBtn() {
     btnDelete.show();
     btnCancel.show();
     btnEdit.hide();
+    card.off("click");
+    card.on("click",
+        function() {
+            const currCheck = $(`#check-${$(this).find(".card-img-top").data("id")}`);
+            toggleCheckBox(currCheck);
+        });
 }
 
 function clear() {
     checkBoxes.prop("checked", false);
-    card.off("click");
     aCard.off("click");
     hideBtn();
 }

@@ -91,5 +91,23 @@ namespace ImageManager.Controllers
             await _unitOfWork.SaveChangesAsync();
             return Ok();
         }
+
+        [HttpGet]
+        public IActionResult AddImages(int albumId)
+        {
+            var model = _albumService.FindById(albumId);
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddImages(Image model, IFormFile file)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            await _unitOfWork.SaveChangesAsync();
+            return View();
+        }
     }
 }

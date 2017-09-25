@@ -20,7 +20,7 @@
         <div class="col-6 col-md-3 col-lg-2 p-1">
             <a asp-action="Detail" asp-controller="Album" asp-route-id="@item.Id">
                 <div class="card cusor-pointer">
-                    <input type="checkbox" id="@item.Id" name="selectedItems" value="@item.Id" hidden/>
+                    <input type="checkbox" id="check-@item.Id" name="selectedItems" value="@item.Id" hidden/>
                     <label for="@item.Id" class="m-0"></label>
                     <img class="card-img-top img-fluid" src="@item.Images?.FirstOrDefault()?.Path" alt="" data-id="@item.Id" style="height: 175px" asp-append-version="true">
                     <div class="card-img-overlay p-0 d-block">

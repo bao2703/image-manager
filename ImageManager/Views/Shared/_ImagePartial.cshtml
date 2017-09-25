@@ -1,7 +1,7 @@
 @model Image
 
 <div class="card cusor-pointer">
-    <input type="checkbox" id="@Model.Id" name="selectedItems" value="@Model.Id" hidden/>
+    <input type="checkbox" id="check-@Model.Id" name="selectedItems" value="@Model.Id" hidden/>
     <label for="@Model.Id" class="m-0"></label>
     <img class="card-img-top img-fluid" src="@Model.Path" alt="" data-id="@Model.Id" style="height: 175px" asp-append-version="true">
     @if (!string.IsNullOrEmpty(Model.Name) || !string.IsNullOrEmpty(Model.Description))

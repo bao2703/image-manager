@@ -1,1 +1,1 @@
-﻿// Write your JavaScript code.
+﻿$(".carousel-item").first().addClass("active");

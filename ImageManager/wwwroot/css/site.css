@@ -1,4 +1,6 @@
-﻿.navbar-nav > .nav-item > .nav-link { color: white; }
+﻿body { background-color: #ECEFF1; }
+
+.navbar-nav > .nav-item > .nav-link { color: white; }
 
 .card-img-overlay { top: auto; }
 

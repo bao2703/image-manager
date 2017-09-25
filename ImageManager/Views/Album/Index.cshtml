@@ -4,31 +4,25 @@
     ViewData["Title"] = "My Albums";
 }
 
-@section Header {
-    @await Html.PartialAsync("_HeaderPartial", "My Albums")
-}
-
-<div class="row mb-4">
+<div class="row px-1 my-2">
     <div class="col-md-12">
-        <div class="float-right">
-            <a asp-action="Create" asp-controller="Album" class="btn btn-primary">
-                <i class="fa fa-plus"></i>
-                Create new Album
-            </a>
-            @await Html.PartialAsync("_EditPartial")
-        </div>
+        <a asp-action="Create" asp-controller="Album" class="btn btn-primary">
+            <i class="fa fa-plus"></i>
+            Create new Album
+        </a>
+        @await Html.PartialAsync("_EditPartial")
     </div>
 </div>
 
-<div class="row">
+<div class="row no-gutters">
     @foreach (var item in Model)
     {
-        <div class="col-6 col-md-3 col-lg-2 mb-3">
-            <a asp-action="Index" asp-controller="Image" asp-route-albumId="@item.Id">
+        <div class="col-6 col-md-3 col-lg-2 p-1">
+            <a asp-action="Detail" asp-controller="Album" asp-route-id="@item.Id">
                 <div class="card cusor-pointer">
                     <input type="checkbox" id="@item.Id" name="selectedItems" value="@item.Id" hidden/>
                     <label for="@item.Id" class="m-0"></label>
-                    <img class="card-img-top img-fluid" src="@item.Images?.FirstOrDefault()?.Path" alt="" data-id="@item.Id" style="height: 221px" asp-append-version="true">
+                    <img class="card-img-top img-fluid" src="@item.Images?.FirstOrDefault()?.Path" alt="" data-id="@item.Id" style="height: 175px" asp-append-version="true">
                     <div class="card-img-overlay p-0 d-block">
                         <div class="img-detail text-white p-2">
                             <div>@item.Name</div>

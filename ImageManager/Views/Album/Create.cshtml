@@ -4,9 +4,6 @@
     ViewData["Title"] = "Create Album";
 }
 
-@section Header {
-    @await Html.PartialAsync("_HeaderPartial", ViewData["Title"])
-}
 <form asp-action="Create" enctype="multipart/form-data" method="post">
     <div class="row justify-content-center">
         <div class="col-md-6">

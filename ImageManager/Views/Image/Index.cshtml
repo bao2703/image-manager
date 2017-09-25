@@ -1,38 +1,23 @@
 ﻿@model List<Image>
-
-@section Header {
-    @await Html.PartialAsync("_HeaderPartial", ViewData["Title"])
+@{
+    ViewData["Title"] = "Images";
 }
 
-<div class="row mb-4">
+<div class="row px-1 my-2">
     <div class="col-md-12">
-        <div class="float-right">
-            <a asp-action="Create" asp-controller="Image" class="btn btn-primary">
-                <i class="fa fa-plus"></i>
-                Add
-            </a>
-            @await Html.PartialAsync("_EditPartial")
-        </div>
+        <a asp-action="Create" asp-controller="Image" class="btn btn-primary">
+            <i class="fa fa-plus"></i>
+            Add
+        </a>
+        @await Html.PartialAsync("_EditPartial")
     </div>
 </div>
 
-<div class="row">
+<div class="row no-gutters">
     @foreach (var item in Model)
     {
-        <div class="col-6 col-md-3 col-lg-2 mb-3">
-            <div class="card cusor-pointer">
-                <input type="checkbox" id="@item.Id" name="selectedItems" value="@item.Id" hidden/>
-                <label for="@item.Id" class="m-0"></label>
-                <img class="card-img-top img-fluid" src="@item.Path" alt="" data-id="@item.Id" style="height: 221px" asp-append-version="true">
-                <div class="card-img-overlay p-0">
-                    <div class="img-detail text-white p-2">
-                        <div>@item.Name</div>
-                        <div class="img-description">
-                            @item.Description
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="col-6 col-md-3 col-lg-2 p-1">
+            @await Html.PartialAsync("_ImagePartial", item)
         </div>
     }
 </div>

@@ -23,11 +23,12 @@ namespace ImageManager.Data.Seeds
             var imageFaker = new Faker<Image>()
                 .RuleFor(o => o.Path, f => f.Internet.Avatar())
                 .RuleFor(o => o.Name, f => f.Person.FirstName)
-                .RuleFor(o => o.Description, f => f.Lorem.Sentence());
+                .RuleFor(o => o.Description, f => f.Lorem.Sentences(2));
 
             var albumFaker = new Faker<Album>()
                 .RuleFor(o => o.Name, f => f.Person.FirstName)
-                .RuleFor(o => o.Description, f => f.Lorem.Sentence())
+                .RuleFor(o => o.Description, f => f.Lorem.Sentences(5))
+                .RuleFor(o => o.CreatedDate, f => f.Date.Past())
                 .RuleFor(o => o.Images, f => imageFaker.Generate(f.Random.Number(5, 10)));
 
             var userFaker = new Faker<User>()
@@ -40,7 +41,7 @@ namespace ImageManager.Data.Seeds
             users[0].Albums = albumFaker.Generate(10).ToList();
             users.ForEach(async x => await _userManager.CreateAsync(x, "123"));
 
-            //await context.SaveChangesAsync();
+            await context.SaveChangesAsync();
         }
     }
 }

@@ -22,9 +22,14 @@ namespace ImageManager.Services
             return DbSet.Include(x => x.Images);
         }
 
-        public IEnumerable<Album> GetUserAlbums(string userId)
+        public List<Album> GetUserAlbums(string userId)
         {
-            return DbSet.Include(x => x.Images).Where(x => x.User.Id == userId);
+            return DbSet.Include(x => x.Images).Where(x => x.User.Id == userId).ToList();
+        }
+
+        public Album GetUserAlbum(int id, string userId)
+        {
+            return GetUserAlbums(userId).SingleOrDefault(x => x.Id == id);
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using ImageManager.Common;
 using ImageManager.Data.Domains;
@@ -31,7 +30,15 @@ namespace ImageManager.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(User);
-            var model = _albumService.GetUserAlbums(user.Id).ToList();
+            var model = _albumService.GetUserAlbums(user.Id);
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Detail(int id)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var model = _albumService.GetUserAlbum(id, user.Id);
             return View(model);
         }
 
@@ -52,8 +59,8 @@ namespace ImageManager.Controllers
             model.Images = new List<Image>();
             foreach (var file in files)
             {
-                var filePath = $"{Constant.UploadPath}/{DateTime.Now.ToFileTime()}_{file.FileName}";
-                using (var stream = new FileStream($"{Constant.RootPath}/{filePath}", FileMode.Create))
+                var filePath = $"/{Constant.UploadPath}/{DateTime.Now.ToFileTime()}_{file.FileName}";
+                using (var stream = new FileStream($"{Constant.RootPath}{filePath}", FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
                     model.Images.Add(new Image {Path = filePath});
@@ -62,7 +69,7 @@ namespace ImageManager.Controllers
             model.User = await _userManager.GetUserAsync(User);
             await _albumService.AddAsync(model);
             await _unitOfWork.SaveChangesAsync();
-            return RedirectToAction("Index", "Image", new {albumId = model.Id});
+            return RedirectToAction("Detail", "Album", new {model.Id});
         }
 
         [HttpPost]

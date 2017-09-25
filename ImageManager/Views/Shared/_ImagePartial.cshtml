@@ -1,0 +1,18 @@
+@model Image
+
+<div class="card cusor-pointer">
+    <input type="checkbox" id="@Model.Id" name="selectedItems" value="@Model.Id" hidden/>
+    <label for="@Model.Id" class="m-0"></label>
+    <img class="card-img-top img-fluid" src="@Model.Path" alt="" data-id="@Model.Id" style="height: 175px" asp-append-version="true">
+    @if (!string.IsNullOrEmpty(Model.Name) || !string.IsNullOrEmpty(Model.Description))
+    {
+        <div class="card-img-overlay p-0">
+            <div class="img-detail text-white p-2">
+                <div>@Model.Name</div>
+                <div class="img-description">
+                    @Model.Description
+                </div>
+            </div>
+        </div>
+    }
+</div>

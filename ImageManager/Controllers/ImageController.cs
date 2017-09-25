@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using ImageManager.Common;
 using ImageManager.Data.Domains;
@@ -25,23 +24,10 @@ namespace ImageManager.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(int? albumId)
+        public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(User);
-            var images = _imageService.GetAll(user.Id).ToList();
-            List<Image> model;
-            if (albumId == null)
-            {
-                model = images;
-                ViewData["Title"] = "My Images";
-            }
-            else
-            {
-                model = images.Where(x => x.Album.Id == albumId).ToList();
-                var album = images.FirstOrDefault()?.Album;
-                ViewData["Title"] = $"{album?.Name} Album";
-            }
-
+            var model = _imageService.GetAll(user.Id).ToList();
             return View(model.ToList());
         }
 

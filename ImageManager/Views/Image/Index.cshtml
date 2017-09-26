@@ -18,6 +18,8 @@
     }
 </div>
 
+@await Html.PartialAsync("_SlidePartial", Model)
+
 @section Scripts {
     <script id="script-edit" src="~/js/edit.js" asp-append-version="true" data-url="@Url.Action("Delete", "Image")"></script>
 }

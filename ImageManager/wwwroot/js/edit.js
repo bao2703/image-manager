@@ -63,3 +63,12 @@ function clear() {
 function toggleCheckBox(checkBox) {
     checkBox.prop("checked", !checkBox.prop("checked"));
 }
+
+var carousel = $("#carousel");
+$(document).keydown((e) => {
+    if (e.keyCode === 37) {
+        carousel.carousel("prev");
+    } else if (e.keyCode === 39) {
+        carousel.carousel("next");
+    }
+});

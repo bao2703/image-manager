@@ -6,7 +6,8 @@
     "jquery-validation": "1.17.0",
     "jquery-validation-unobtrusive": "3.2.6",
     "bootstrap": "v4.0.0-beta",
-    "font-awesome": "Font-Awesome#v4.7.0"
+    "font-awesome": "Font-Awesome#v4.7.0",
+    "bootstrap-fileinput": "4.4.5"
   },
   "resolutions": {
     "jquery-validation": "1.17.0",

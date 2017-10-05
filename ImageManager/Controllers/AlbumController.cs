@@ -52,9 +52,7 @@ namespace ImageManager.Controllers
         public async Task<IActionResult> Create(Album model, List<IFormFile> files)
         {
             if (!ModelState.IsValid)
-            {
                 return View(model);
-            }
 
             model.Images = new List<Image>();
             foreach (var file in files)
@@ -82,32 +80,12 @@ namespace ImageManager.Controllers
                 {
                     var path = $"{Constant.RootPath}/{x.Path}";
                     if (System.IO.File.Exists(path))
-                    {
                         System.IO.File.Delete(path);
-                    }
                 });
                 _albumService.Remove(album);
             }
             await _unitOfWork.SaveChangesAsync();
             return Ok();
-        }
-
-        [HttpGet]
-        public IActionResult AddImages(int albumId)
-        {
-            var model = _albumService.FindById(albumId);
-            return View(model);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddImages(Image model, IFormFile file)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-            await _unitOfWork.SaveChangesAsync();
-            return View();
         }
     }
 }

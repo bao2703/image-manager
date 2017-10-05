@@ -22,10 +22,10 @@
     </div>
     <div class="row px-1 mb-2">
         <div class="col-md-12">
-            <a asp-action="Create" asp-controller="Image" class="btn btn-primary">
+            <button class="btn btn-primary" id="btn-add">
                 <i class="fa fa-plus"></i>
                 Add
-            </a>
+            </button>
             @await Html.PartialAsync("_EditPartial")
         </div>
     </div>
@@ -43,4 +43,10 @@
 
 @section Scripts {
     <script id="script-edit" src="~/js/edit.js" asp-append-version="true" data-url="@Url.Action("Delete", "Image")"></script>
+
+    <script>
+        $('#btn-add').click(() => {
+
+        });
+    </script>
 }

@@ -38,13 +38,9 @@ namespace ImageManager.Data
             {
                 var e = (Entity) entity.Entity;
                 if (entity.State == EntityState.Added && e.CreatedDate == null)
-                {
                     e.CreatedDate = DateTime.Now;
-                }
                 if (e.UpdatedDate == null)
-                {
                     e.UpdatedDate = DateTime.Now;
-                }
             }
         }
     }

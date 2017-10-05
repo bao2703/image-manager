@@ -35,9 +35,7 @@ namespace ImageManager.Controllers
             {
                 var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
                 if (result.Succeeded)
-                {
                     return RedirectToAction("Index", "Home");
-                }
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                 return View(model);
             }
@@ -82,9 +80,7 @@ namespace ImageManager.Controllers
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
-            {
                 ModelState.AddModelError(string.Empty, error.Description);
-            }
         }
     }
 }

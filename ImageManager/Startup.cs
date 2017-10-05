@@ -73,6 +73,7 @@ namespace ImageManager
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
                 //app.UseBrowserLink();
+                await seeder.InitializeAsync(context);
             }
             else
             {
@@ -84,8 +85,6 @@ namespace ImageManager
             app.UseAuthentication();
 
             app.UseMvcWithDefaultRoute();
-
-            //await seeder.InitializeAsync(context);
         }
     }
 }

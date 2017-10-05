@@ -39,9 +39,7 @@ namespace ImageManager.Controllers
                 var image = _imageService.FindById(item);
                 var path = $"{Constant.RootPath}/{image.Path}";
                 if (System.IO.File.Exists(path))
-                {
                     System.IO.File.Delete(path);
-                }
                 _imageService.Remove(image);
             }
             await _unitOfWork.SaveChangesAsync();

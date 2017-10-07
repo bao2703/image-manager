@@ -31,5 +31,11 @@ namespace ImageManager.Controllers
         {
             return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
         }
+
+        [HttpPost]
+        public IActionResult Progress()
+        {
+            return Ok(Startup.Progress);
+        }
     }
 }

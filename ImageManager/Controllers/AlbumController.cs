@@ -51,19 +51,9 @@ namespace ImageManager.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Album model, List<IFormFile> files)
         {
-            if (!ModelState.IsValid)
-                return View(model);
+            if (!ModelState.IsValid) return View(model);
 
-            model.Images = new List<Image>();
-            foreach (var file in files)
-            {
-                var filePath = $"/{Constant.UploadPath}/{DateTime.Now.ToFileTime()}_{file.FileName}";
-                using (var stream = new FileStream($"{Constant.RootPath}{filePath}", FileMode.Create))
-                {
-                    await file.CopyToAsync(stream);
-                    model.Images.Add(new Image {Path = filePath});
-                }
-            }
+            model.Images = new List<Image>(await UploadAsync(files));
             model.User = await _userManager.GetUserAsync(User);
             await _albumService.AddAsync(model);
             await _unitOfWork.SaveChangesAsync();
@@ -86,6 +76,32 @@ namespace ImageManager.Controllers
             }
             await _unitOfWork.SaveChangesAsync();
             return Ok();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddImage(int id, List<IFormFile> files)
+        {
+            var album = _albumService.FindById(id);
+            if (album == null) return BadRequest();
+
+            album.Images.AddRange(await UploadAsync(files));
+            await _unitOfWork.SaveChangesAsync();
+            return RedirectToAction("Detail", "Album", new {album.Id});
+        }
+
+        private async Task<List<Image>> UploadAsync(IEnumerable<IFormFile> files)
+        {
+            var images = new List<Image>();
+            foreach (var file in files)
+            {
+                var filePath = $"/{Constant.UploadPath}/{DateTime.Now.ToFileTime()}_{file.FileName}";
+                using (var stream = new FileStream($"{Constant.RootPath}{filePath}", FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                    images.Add(new Image {Path = filePath});
+                }
+            }
+            return images;
         }
     }
 }

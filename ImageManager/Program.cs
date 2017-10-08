@@ -15,6 +15,7 @@ namespace ImageManager
             return WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .UseUrls("http://localhost:5000/")
+                .UseKestrel(options => options.Limits.MaxRequestBodySize = long.MaxValue)
                 .Build();
         }
     }

@@ -86,13 +86,11 @@ namespace ImageManager.Controllers
 
             album.Images.AddRange(await UploadAsync(files));
             await _unitOfWork.SaveChangesAsync();
-            return RedirectToAction("Detail", "Album", new {album.Id});
+            return Ok();
         }
 
         private async Task<List<Image>> UploadAsync(IList<IFormFile> files)
         {
-            Startup.Progress = 0;
-            var value = 100 / files.Count;
             var images = new List<Image>();
             foreach (var file in files)
             {
@@ -100,10 +98,8 @@ namespace ImageManager.Controllers
                 using (var stream = new FileStream($"{Constant.RootPath}{filePath}", FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
-                    await Task.Delay(200);
                     images.Add(new Image {Path = filePath});
                 }
-                Startup.Progress += value;
             }
             return images;
         }

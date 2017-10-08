@@ -25,23 +25,7 @@
 <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
 <script src="~/lib/bootstrap-fileinput/js/fileinput.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
-<script>
-    let progress = $('#progress');
-    progress.hide();
-    $('#form').submit(() => {
-        progress.show();
-        $(".file-input").hide();
-        $('button').addClass('disabled');
-        const interval = setInterval(() => {
-                $.post(
-                    '@Url.Action("Progress", "Home")',
-                    (resp) => {
-                        progress.css('width', `${resp}%`);
-                    });
-            },
-            100);
-    });
-</script>
+
 @RenderSection("Scripts", false)
 </body>
 </html>

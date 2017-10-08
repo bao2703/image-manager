@@ -77,7 +77,41 @@
                 showPreview: false,
                 showUpload: false,
                 allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
-                uploadUrl: 'upload'
+                //uploadUrl: ''
+            });
+
+            const progressBar = $('#progress');
+            progressBar.hide();
+            $('#form').submit((e) => {
+                e.preventDefault();
+
+                const formData = new FormData();
+                const files = $("#files")[0].files;
+                $.each(files, (i, file) => formData.append('files', file));
+
+                $.ajax({
+                    type: "POST",
+                    url: $('#form').attr('action'),
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    xhr: () => {
+                        const xhr = new window.XMLHttpRequest();
+                        xhr.upload.addEventListener("progress",
+                            (evt) => {
+                                const progress = Math.round((evt.loaded / evt.total) * 100);
+                                progressBar.width(`${progress}%`);
+                            },
+                            false);
+                        return xhr;
+                    },
+                    success: () => location.reload(),
+                    beforeSend: () => {
+                        $(".file-input").hide();
+                        $('button').addClass('disabled');
+                        progressBar.show();
+                    }
+                });
             });
         });
     </script>

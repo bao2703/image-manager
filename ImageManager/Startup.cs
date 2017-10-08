@@ -19,8 +19,6 @@ namespace ImageManager
             Configuration = configuration;
         }
 
-        public static int Progress { get; set; }
-
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -32,7 +30,7 @@ namespace ImageManager
                 .AddDefaultTokenProviders();
 
             services.AddMvc();
-
+            services.AddDistributedMemoryCache();
             services.AddSession();
 
             services.AddTransient<UserService>();
@@ -81,6 +79,8 @@ namespace ImageManager
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            app.UseSession();
 
             app.UseStaticFiles();
 

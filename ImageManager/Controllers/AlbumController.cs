@@ -42,22 +42,16 @@ namespace ImageManager.Controllers
             return View(model);
         }
 
-        [HttpGet]
-        public IActionResult Create()
-        {
-            return View();
-        }
-
         [HttpPost]
-        public async Task<IActionResult> Create(Album model, List<IFormFile> files)
+        public async Task<string> Create(Album model)
         {
-            if (!ModelState.IsValid) return View(model);
+            if (!ModelState.IsValid) return "invalid";
 
-            model.Images = new List<Image>(await UploadAsync(files));
+            model.Images = new List<Image>();
             model.User = await _userManager.GetUserAsync(User);
             await _albumService.AddAsync(model);
             await _unitOfWork.SaveChangesAsync();
-            return RedirectToAction("Detail", "Album", new {model.Id});
+            return Url.Action("Detail", "Album", new {model.Id});
         }
 
         [HttpPost]

@@ -100,7 +100,7 @@
                         xhr.upload.addEventListener("progress",
                             (evt) => {
                                 const progress = Math.round((evt.loaded / evt.total) * 100);
-                                progressBar.width(`${progress}%`);
+                                progressBar.width(`${progress - 5}%`);
                             },
                             false);
                         return xhr;

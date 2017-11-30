@@ -35,9 +35,8 @@ namespace ImageManager.Data.Seeds
             var albumFaker = new Faker<Album>()
                 .RuleFor(o => o.Name, f => f.Person.FirstName)
                 .RuleFor(o => o.Description, f => f.Lorem.Sentences(5))
-                .RuleFor(o => o.DateCreated, f => f.Date.Past())
                 .RuleFor(o => o.Category, f => f.PickRandom(category))
-                .RuleFor(o => o.Images, f => imageFaker.Generate(f.Random.Number(5, 100)));
+                .RuleFor(o => o.Images, f => imageFaker.Generate(f.Random.Number(5, 20)));
 
             var userFaker = new Faker<User>()
                 .RuleFor(o => o.Name, f => $"{f.Person.FirstName} {f.Person.LastName}")
@@ -45,12 +44,17 @@ namespace ImageManager.Data.Seeds
                 .RuleFor(o => o.Email, f => f.Person.Email)
                 .RuleFor(o => o.Role, f => Role.None);
 
-            var users = userFaker.Generate(5).ToList();
+            var users = userFaker.Generate(50).ToList();
             users[0].UserName = "admin";
-            users[0].Albums = albumFaker.Generate(100).ToList();
+            users[0].Albums = albumFaker.Generate(10).ToList();
             users[1].UserName = "admin1";
-            users[1].Albums = albumFaker.Generate(100).ToList();
-            users.ForEach(async x => await _userManager.CreateAsync(x, "123"));
+            users[1].Albums = albumFaker.Generate(10).ToList();
+            users.ForEach(async x =>
+            {
+                x.DateCreated = new Faker().Date.Past();
+                x.DateModified = x.DateCreated;
+                await _userManager.CreateAsync(x, "123");
+            });
 
             await _context.SaveChangesAsync();
         }

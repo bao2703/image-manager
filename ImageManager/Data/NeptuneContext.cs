@@ -17,6 +17,8 @@ namespace ImageManager.Data
 
         public DbSet<Image> Images { get; set; }
 
+        public DbSet<Category> Categories { get; set; }
+
         public override int SaveChanges()
         {
             AddTimestamps();
@@ -32,15 +34,14 @@ namespace ImageManager.Data
         private void AddTimestamps()
         {
             var entities = ChangeTracker.Entries().Where(x =>
-                x.Entity is Entity && (x.State == EntityState.Added || x.State == EntityState.Modified));
+                x.Entity is ITimestampEntity && (x.State == EntityState.Added || x.State == EntityState.Modified));
 
             foreach (var entity in entities)
             {
-                var e = (Entity) entity.Entity;
-                if (entity.State == EntityState.Added && e.DateCreated == null)
+                var e = (ITimestampEntity) entity.Entity;
+                if (entity.State == EntityState.Added)
                     e.DateCreated = DateTime.Now;
-                if (e.DateModified == null)
-                    e.DateModified = DateTime.Now;
+                e.DateModified = DateTime.Now;
             }
         }
     }

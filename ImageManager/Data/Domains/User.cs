@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 
 namespace ImageManager.Data.Domains
@@ -9,12 +10,16 @@ namespace ImageManager.Data.Domains
         Admin
     }
 
-    public class User : IdentityUser
+    public class User : IdentityUser, ITimestampEntity
     {
         public string Name { get; set; }
 
         public Role Role { get; set; }
 
         public List<Album> Albums { get; set; }
+
+        public DateTime? DateCreated { get; set; }
+
+        public DateTime? DateModified { get; set; }
     }
 }

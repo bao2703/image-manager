@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using ImageManager.Data.Domains;
 using ImageManager.Models.Account;
 using ImageManager.Services;
@@ -56,7 +57,9 @@ namespace ImageManager.Controllers
                 var user = new User
                 {
                     UserName = model.UserName,
-                    Email = model.Email
+                    Email = model.Email,
+                    DateCreated = DateTime.Now,
+                    DateModified = DateTime.Now
                 };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)

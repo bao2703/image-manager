@@ -1,12 +1,16 @@
-﻿@model IEnumerable<ImageManager.Controllers.AdminController.ChartModel>
+﻿@model ImageManager.Controllers.AdminController.AdminModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Admin";
 }
 
-<div id="chart_div"></div>
+<div id="images-chart"></div>
+<div id="users-chart"></div>
 
 @section Scripts {
+    <style>
+        body { background-color: white }
+    </style>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
         // Load the Visualization API and the corechart package.
@@ -16,7 +20,7 @@
         function drawChart() {
             const data = google.visualization.arrayToDataTable([
                 ['Title', 'Images'],
-                @foreach (var item in Model)
+                @foreach (var item in Model.ImagesChartData)
                 {
                     <text>['@item.Key', @item.Value],</text>
                 }
@@ -33,8 +37,31 @@
                 legend: { position: "none" }
             };
 
-            const chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+            const chart = new google.visualization.ColumnChart(document.getElementById('images-chart'));
             chart.draw(data, options);
+
+
+            const data2 = google.visualization.arrayToDataTable([
+                ['Title', 'Users'],
+                @foreach (var item in Model.UsersChartData)
+                {
+                    <text>['@item.Key', @item.Value],</text>
+                }
+            ]);
+            const options2 = {
+                title: 'Users Per Month',
+                chartArea: { width: "80%" },
+                height: 500,
+                hAxis: {
+                    textStyle: {
+                        fontSize: 10
+                    }
+                },
+                legend: { position: "none" }
+            };
+
+            const chart2 = new google.visualization.ColumnChart(document.getElementById('users-chart'));
+            chart2.draw(data2, options2);
         }
 
         $(window).resize(drawChart);

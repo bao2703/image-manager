@@ -36,6 +36,7 @@ namespace ImageManager
             services.AddTransient<UserService>();
             services.AddTransient<AlbumService>();
             services.AddTransient<ImageService>();
+            services.AddTransient<CategoryService>();
             services.AddTransient<UnitOfWork>();
             services.AddTransient<Seeder>();
 
@@ -65,14 +66,13 @@ namespace ImageManager
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public async void Configure(IApplicationBuilder app, IHostingEnvironment env, Seeder seeder,
-            NeptuneContext context)
+        public async void Configure(IApplicationBuilder app, IHostingEnvironment env, Seeder seeder)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
-                await seeder.InitializeAsync(context);
+                await seeder.InitializeAsync();
             }
             else
             {

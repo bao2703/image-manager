@@ -8,17 +8,19 @@ namespace ImageManager.Data.Seeds
 {
     public class Seeder
     {
+        private readonly NeptuneContext _context;
         private readonly UserManager<User> _userManager;
 
-        public Seeder(UserManager<User> userManager)
+        public Seeder(UserManager<User> userManager, NeptuneContext context)
         {
             _userManager = userManager;
+            _context = context;
         }
 
-        public async Task InitializeAsync(NeptuneContext context)
+        public async Task InitializeAsync()
         {
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            _context.Database.EnsureDeleted();
+            _context.Database.EnsureCreated();
 
             var imageFaker = new Faker<Image>()
                 .RuleFor(o => o.Path, f => f.Internet.Avatar())
@@ -28,7 +30,7 @@ namespace ImageManager.Data.Seeds
             var categoryFaker = new Faker<Category>()
                 .RuleFor(o => o.Name, f => f.Commerce.Categories(1)[0]);
 
-            var category = categoryFaker.Generate(20).ToList();
+            var category = categoryFaker.Generate(10).ToList();
 
             var albumFaker = new Faker<Album>()
                 .RuleFor(o => o.Name, f => f.Person.FirstName)
@@ -50,7 +52,7 @@ namespace ImageManager.Data.Seeds
             users[1].Albums = albumFaker.Generate(100).ToList();
             users.ForEach(async x => await _userManager.CreateAsync(x, "123"));
 
-            await context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
     }
 }

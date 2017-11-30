@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using ImageManager.Common;
 using ImageManager.Data.Domains;
@@ -27,10 +28,12 @@ namespace ImageManager.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? categoryId)
         {
             var user = await _userManager.GetUserAsync(User);
             var model = _albumService.GetUserAlbums(user.Id);
+            if (categoryId != null)
+                model = model.Where(x => x.Category.Id == categoryId).ToList();
             return View(model);
         }
 

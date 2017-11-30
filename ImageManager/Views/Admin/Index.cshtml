@@ -1,0 +1,42 @@
+﻿@model IEnumerable<ImageManager.Controllers.AdminController.ChartModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div id="chart_div"></div>
+
+@section Scripts {
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        // Load the Visualization API and the corechart package.
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            const data = google.visualization.arrayToDataTable([
+                ['Title', 'Images'],
+                @foreach (var item in Model)
+                {
+                    <text>['@item.Key', @item.Value],</text>
+                }
+            ]);
+            const options = {
+                title: 'Images Per Category',
+                chartArea: { width: "80%" },
+                height: 500,
+                hAxis: {
+                    textStyle: {
+                        fontSize: 10
+                    }
+                },
+                legend: { position: "none" }
+            };
+
+            const chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        }
+
+        $(window).resize(drawChart);
+    </script>
+}

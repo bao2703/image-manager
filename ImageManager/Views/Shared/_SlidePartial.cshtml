@@ -8,7 +8,7 @@
                     @foreach (var item in Model)
                     {
                         <div class="carousel-item" id="slide-@item.Id">
-                            <img class="img-fluid d-block mx-auto" src="@item.Path" alt="" asp-append-version="true" style="min-height: 800px">
+                            <img class="img-fluid d-block mx-auto" src="@item.Path" alt="" asp-append-version="true" style="height: 600px">
                             @if (!string.IsNullOrEmpty(item.Name) || !string.IsNullOrEmpty(item.Description))
                             {
                                 <div class="carousel-caption d-none d-md-block w-100 px-5 img-detail" style="bottom: 0; left: 0">

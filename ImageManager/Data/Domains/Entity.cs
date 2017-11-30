@@ -6,8 +6,8 @@ namespace ImageManager.Data.Domains
     {
         public int Id { get; set; }
 
-        public DateTime? CreatedDate { get; set; }
+        public DateTime? DateCreated { get; set; }
 
-        public DateTime? UpdatedDate { get; set; }
+        public DateTime? DateModified { get; set; }
     }
 }

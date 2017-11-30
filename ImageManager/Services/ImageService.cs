@@ -12,6 +12,11 @@ namespace ImageManager.Services
         {
         }
 
+        public override IEnumerable<Image> GetAll()
+        {
+            return DbSet.Include(x => x.Album).ThenInclude(x => x.Category);
+        }
+
         public IEnumerable<Image> GetAll(string userId)
         {
             return DbSet.Include(x => x.Album).Where(x => x.Album.User.Id == userId);

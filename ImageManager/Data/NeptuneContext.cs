@@ -37,10 +37,10 @@ namespace ImageManager.Data
             foreach (var entity in entities)
             {
                 var e = (Entity) entity.Entity;
-                if (entity.State == EntityState.Added && e.CreatedDate == null)
-                    e.CreatedDate = DateTime.Now;
-                if (e.UpdatedDate == null)
-                    e.UpdatedDate = DateTime.Now;
+                if (entity.State == EntityState.Added && e.DateCreated == null)
+                    e.DateCreated = DateTime.Now;
+                if (e.DateModified == null)
+                    e.DateModified = DateTime.Now;
             }
         }
     }

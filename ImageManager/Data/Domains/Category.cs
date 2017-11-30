@@ -1,19 +1,10 @@
 ﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Identity;
 
 namespace ImageManager.Data.Domains
 {
-    public enum Role
-    {
-        None,
-        Admin
-    }
-
-    public class User : IdentityUser
+    public class Category : Entity
     {
         public string Name { get; set; }
-
-        public Role Role { get; set; }
 
         public List<Album> Albums { get; set; }
     }

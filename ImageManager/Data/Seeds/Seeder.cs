@@ -25,22 +25,29 @@ namespace ImageManager.Data.Seeds
                 .RuleFor(o => o.Name, f => f.Person.FirstName)
                 .RuleFor(o => o.Description, f => f.Lorem.Sentences(2));
 
+            var categoryFaker = new Faker<Category>()
+                .RuleFor(o => o.Name, f => f.Commerce.Categories(1)[0]);
+
+            var category = categoryFaker.Generate(20).ToList();
+
             var albumFaker = new Faker<Album>()
                 .RuleFor(o => o.Name, f => f.Person.FirstName)
                 .RuleFor(o => o.Description, f => f.Lorem.Sentences(5))
-                .RuleFor(o => o.CreatedDate, f => f.Date.Past())
-                .RuleFor(o => o.Images, f => imageFaker.Generate(f.Random.Number(5, 10)));
+                .RuleFor(o => o.DateCreated, f => f.Date.Past())
+                .RuleFor(o => o.Category, f => f.PickRandom(category))
+                .RuleFor(o => o.Images, f => imageFaker.Generate(f.Random.Number(5, 100)));
 
             var userFaker = new Faker<User>()
                 .RuleFor(o => o.Name, f => $"{f.Person.FirstName} {f.Person.LastName}")
                 .RuleFor(o => o.UserName, f => f.Person.UserName)
-                .RuleFor(o => o.Email, f => f.Person.Email);
+                .RuleFor(o => o.Email, f => f.Person.Email)
+                .RuleFor(o => o.Role, f => Role.None);
 
-            var users = userFaker.Generate(100).ToList();
+            var users = userFaker.Generate(5).ToList();
             users[0].UserName = "admin";
-            users[0].Albums = albumFaker.Generate(10).ToList();
+            users[0].Albums = albumFaker.Generate(100).ToList();
             users[1].UserName = "admin1";
-            users[1].Albums = albumFaker.Generate(10).ToList();
+            users[1].Albums = albumFaker.Generate(100).ToList();
             users.ForEach(async x => await _userManager.CreateAsync(x, "123"));
 
             await context.SaveChangesAsync();

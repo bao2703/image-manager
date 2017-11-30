@@ -14,17 +14,17 @@ namespace ImageManager.Services
 
         public override Album FindById(object id)
         {
-            return DbSet.Include(x => x.Images).SingleOrDefault(x => x.Id == (int) id);
+            return DbSet.Include(x => x.Images).Include(x => x.Category).SingleOrDefault(x => x.Id == (int) id);
         }
 
         public override IEnumerable<Album> GetAll()
         {
-            return DbSet.Include(x => x.Images);
+            return DbSet.Include(x => x.Images).Include(x => x.Category);
         }
 
         public List<Album> GetUserAlbums(string userId)
         {
-            return DbSet.Include(x => x.Images).Where(x => x.User.Id == userId).ToList();
+            return DbSet.Include(x => x.Images).Include(x => x.Category).Where(x => x.User.Id == userId).ToList();
         }
 
         public Album GetUserAlbum(int id, string userId)

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Sakura.AspNetCore.Mvc;
 
 namespace ImageManager
 {
@@ -30,8 +31,10 @@ namespace ImageManager
                 .AddDefaultTokenProviders();
 
             services.AddMvc();
-            services.AddDistributedMemoryCache();
-            services.AddSession();
+            //services.AddDistributedMemoryCache();
+            //services.AddSession();
+
+            services.AddBootstrapPagerGenerator(options => options.ConfigureDefault());
 
             services.AddTransient<UserService>();
             services.AddTransient<AlbumService>();
@@ -72,14 +75,14 @@ namespace ImageManager
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
-                await seeder.InitializeAsync();
+                //await seeder.InitializeAsync();
             }
             else
             {
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseSession();
+            //app.UseSession();
 
             app.UseStaticFiles();
 

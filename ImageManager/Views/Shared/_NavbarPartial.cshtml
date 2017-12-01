@@ -31,9 +31,9 @@
                 </div>
             </li>
         </ul>
-        <form class="form-inline mr-2">
+        <form class="form-inline mr-2" asp-action="Index" asp-controller="Album" method="get">
             <div class="input-group">
-                <input class="form-control mr-2" type="text" placeholder="Search">
+                <input class="form-control mr-2" type="text" placeholder="Search" name="searchString">
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </div>
         </form>

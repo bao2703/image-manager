@@ -1,11 +1,11 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using ImageManager.Common;
 using ImageManager.Data.Domains;
 using ImageManager.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Sakura.AspNetCore;
 
 namespace ImageManager.Controllers
 {
@@ -24,11 +24,14 @@ namespace ImageManager.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1, int pageSize = 60)
         {
+            if (page <= 0 || pageSize <= 0) return NotFound();
             var user = await _userManager.GetUserAsync(User);
-            var model = _imageService.GetAll(user.Id).ToList();
-            return View(model.ToList());
+            var model = _imageService.GetAll(user.Id);
+            var pagedData = model.ToPagedList(pageSize, page);
+            ViewData["userId"] = user.Id;
+            return View(pagedData);
         }
 
         [HttpPost]

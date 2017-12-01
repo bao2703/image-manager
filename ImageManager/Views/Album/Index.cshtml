@@ -1,5 +1,6 @@
-﻿@model List<Album>
-
+﻿@using ImageManager.Services
+@model Sakura.AspNetCore.IPagedList<Album>
+@inject CategoryService CategoryService
 @{
     ViewData["Title"] = "Albums";
 }
@@ -35,6 +36,9 @@
             </a>
         </div>
     }
+    <div class="col-12 p-1">
+        <pager source="Model"/>
+    </div>
 </div>
 
 @await Html.PartialAsync("_CreatePartial")
@@ -43,6 +47,7 @@
     <script id="script-edit" src="~/js/edit.js" asp-append-version="true" data-url="@Url.Action("Delete", "Album")"></script>
 
     <script>
+        $('#name-required').hide();
         $('#form').submit(e => {
             e.preventDefault();
             $.ajax({
@@ -51,12 +56,12 @@
                 data: $('#form').serialize(),
                 success: resp => {
                     if (resp === 'invalid') {
-
+                        $('#name-required').show();
                     } else {
                         window.location.href = resp;
                     }
                 }
             });
-        })
+        });
     </script>
 }

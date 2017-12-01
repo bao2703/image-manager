@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Sakura.AspNetCore;
 
 namespace ImageManager.Controllers
 {
@@ -28,13 +29,24 @@ namespace ImageManager.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(int? categoryId)
+        public async Task<IActionResult> Index(string searchString, int? categoryId, int page = 1, int pageSize = 3)
         {
+            if (page <= 0 || pageSize <= 0) return NotFound();
+
             var user = await _userManager.GetUserAsync(User);
             var model = _albumService.GetUserAlbums(user.Id);
+
+            if (!string.IsNullOrEmpty(searchString))
+                model = model.Where(x => x.Name.ToLower().Contains(searchString.ToLower()));
+
             if (categoryId != null)
-                model = model.Where(x => x.Category.Id == categoryId).ToList();
-            return View(model);
+            {
+                ViewData["categoryId"] = categoryId;
+                model = model.Where(x => x.Category.Id == categoryId);
+            }
+
+            var pagedData = model.ToPagedList(pageSize, page);
+            return View(pagedData);
         }
 
         [HttpGet]

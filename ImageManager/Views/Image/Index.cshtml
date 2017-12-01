@@ -1,4 +1,6 @@
-﻿@model List<Image>
+﻿@using ImageManager.Services
+@model Sakura.AspNetCore.IPagedList<Image>
+@inject ImageService ImageService
 @{
     ViewData["Title"] = "Images";
 }
@@ -16,9 +18,12 @@
             @await Html.PartialAsync("_ImagePartial", item)
         </div>
     }
+    <div class="col-12 p-1">
+        <pager source="Model"/>
+    </div>
 </div>
 
-@await Html.PartialAsync("_SlidePartial", Model)
+@await Html.PartialAsync("_SlidePartial", ImageService.GetAll(ViewData["userId"].ToString()).ToList())
 
 @section Scripts {
     <script id="script-edit" src="~/js/edit.js" asp-append-version="true" data-url="@Url.Action("Delete", "Image")"></script>

@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using ImageManager.Data.Domains;
 using ImageManager.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ImageManager.Controllers
@@ -11,17 +14,24 @@ namespace ImageManager.Controllers
     public class AdminController : Controller
     {
         private readonly ImageService _imageService;
+        private readonly UserManager<User> _userManager;
         private readonly UserService _userService;
 
-        public AdminController(ImageService imageService, UserService userService)
+        public AdminController(ImageService imageService, UserService userService, UserManager<User> userManager)
         {
             _imageService = imageService;
             _userService = userService;
+            _userManager = userManager;
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user.Role != Role.Admin)
+                return NotFound();
+
             var images = _imageService.GetAll();
             var g = images.GroupBy(x => x.Album.Category.Name).Select(x => new ChartDataModel
             {

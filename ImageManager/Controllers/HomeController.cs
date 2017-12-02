@@ -1,6 +1,9 @@
 ﻿using System.Diagnostics;
+using System.Threading.Tasks;
+using ImageManager.Data.Domains;
 using ImageManager.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ImageManager.Controllers
@@ -8,9 +11,20 @@ namespace ImageManager.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly UserManager<User> _userManager;
+
+        public HomeController(UserManager<User> userManager)
         {
-            return View();
+            _userManager = userManager;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user.Role == Role.Admin)
+                return RedirectToAction("Index", "Admin");
+            return RedirectToAction("Index", "Album");
         }
 
         public IActionResult About()

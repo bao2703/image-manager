@@ -29,7 +29,7 @@ namespace ImageManager.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(string searchString, int? categoryId, int page = 1, int pageSize = 3)
+        public async Task<IActionResult> Index(string searchString, int? categoryId, int page = 1, int pageSize = 10)
         {
             if (page <= 0 || pageSize <= 0) return NotFound();
 

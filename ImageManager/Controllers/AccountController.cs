@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using ImageManager.Data.Domains;
 using ImageManager.Models.Account;
-using ImageManager.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,12 +12,9 @@ namespace ImageManager.Controllers
     {
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
-        private readonly UserService _userService;
 
-        public AccountController(UserService userService, UserManager<User> userManager,
-            SignInManager<User> signInManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
-            _userService = userService;
             _userManager = userManager;
             _signInManager = signInManager;
         }
@@ -26,6 +22,8 @@ namespace ImageManager.Controllers
         [HttpGet]
         public IActionResult Login()
         {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Album");
             return View();
         }
 

@@ -46,8 +46,10 @@ namespace ImageManager.Data.Seeds
 
             var users = userFaker.Generate(50).ToList();
             users[0].UserName = "admin";
+            users[0].Role = Role.Admin;
             users[0].Albums = albumFaker.Generate(10).ToList();
-            users[1].UserName = "admin1";
+            users[1].UserName = "user";
+            users[1].Role = Role.None;
             users[1].Albums = albumFaker.Generate(10).ToList();
             users.ForEach(async x =>
             {

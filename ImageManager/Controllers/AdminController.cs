@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using ImageManager.Data.Domains;
 using ImageManager.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ImageManager.Controllers
@@ -14,20 +13,18 @@ namespace ImageManager.Controllers
     public class AdminController : Controller
     {
         private readonly ImageService _imageService;
-        private readonly UserManager<User> _userManager;
         private readonly UserService _userService;
 
-        public AdminController(ImageService imageService, UserService userService, UserManager<User> userManager)
+        public AdminController(ImageService imageService, UserService userService)
         {
             _imageService = imageService;
             _userService = userService;
-            _userManager = userManager;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var user = await _userManager.GetUserAsync(User);
+            var user = await _userService.GetUserAsync(User);
 
             if (user.Role != Role.Admin)
                 return NotFound();

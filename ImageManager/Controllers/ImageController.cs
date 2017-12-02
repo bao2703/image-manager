@@ -1,9 +1,7 @@
 ﻿using System.Threading.Tasks;
 using ImageManager.Common;
-using ImageManager.Data.Domains;
 using ImageManager.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Sakura.AspNetCore;
 
@@ -14,20 +12,20 @@ namespace ImageManager.Controllers
     {
         private readonly ImageService _imageService;
         private readonly UnitOfWork _unitOfWork;
-        private readonly UserManager<User> _userManager;
+        private readonly UserService _userService;
 
-        public ImageController(ImageService imageService, UserManager<User> userManager, UnitOfWork unitOfWork)
+        public ImageController(ImageService imageService, UnitOfWork unitOfWork, UserService userService)
         {
             _imageService = imageService;
-            _userManager = userManager;
             _unitOfWork = unitOfWork;
+            _userService = userService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index(int page = 1, int pageSize = 60)
         {
             if (page <= 0 || pageSize <= 0) return NotFound();
-            var user = await _userManager.GetUserAsync(User);
+            var user = await _userService.GetUserAsync(User);
             var model = _imageService.GetAll(user.Id);
             var pagedData = model.ToPagedList(pageSize, page);
             ViewData["userId"] = user.Id;

@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using ImageManager.Data.Domains;
 using ImageManager.Models.Account;
+using ImageManager.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,13 +11,11 @@ namespace ImageManager.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly SignInManager<User> _signInManager;
-        private readonly UserManager<User> _userManager;
+        private readonly UserService _userService;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(UserService userService)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
+            _userService = userService;
         }
 
         [HttpGet]
@@ -32,7 +31,7 @@ namespace ImageManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
+                var result = await _userService.PasswordSignInAsync(model.UserName, model.Password);
                 if (result.Succeeded)
                     return RedirectToAction("Index", "Home");
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
@@ -59,10 +58,10 @@ namespace ImageManager.Controllers
                     DateCreated = DateTime.Now,
                     DateModified = DateTime.Now
                 };
-                var result = await _userManager.CreateAsync(user, model.Password);
+                var result = await _userService.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await _signInManager.SignInAsync(user, false);
+                    await _userService.SignInAsync(user);
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
@@ -74,7 +73,7 @@ namespace ImageManager.Controllers
         [Authorize]
         public async Task<IActionResult> Logout()
         {
-            await _signInManager.SignOutAsync();
+            await _userService.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
 

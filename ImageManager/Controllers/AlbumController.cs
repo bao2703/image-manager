@@ -8,7 +8,6 @@ using ImageManager.Data.Domains;
 using ImageManager.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Sakura.AspNetCore;
 
@@ -19,13 +18,13 @@ namespace ImageManager.Controllers
     {
         private readonly AlbumService _albumService;
         private readonly UnitOfWork _unitOfWork;
-        private readonly UserManager<User> _userManager;
+        private readonly UserService _userService;
 
-        public AlbumController(AlbumService albumService, UserManager<User> userManager, UnitOfWork unitOfWork)
+        public AlbumController(AlbumService albumService, UnitOfWork unitOfWork, UserService userService)
         {
             _albumService = albumService;
-            _userManager = userManager;
             _unitOfWork = unitOfWork;
+            _userService = userService;
         }
 
         [HttpGet]
@@ -33,7 +32,7 @@ namespace ImageManager.Controllers
         {
             if (page <= 0 || pageSize <= 0) return NotFound();
 
-            var user = await _userManager.GetUserAsync(User);
+            var user = await _userService.GetUserAsync(User);
             var model = _albumService.GetUserAlbums(user.Id);
 
             if (!string.IsNullOrEmpty(searchString))
@@ -52,7 +51,7 @@ namespace ImageManager.Controllers
         [HttpGet]
         public async Task<IActionResult> Detail(int id)
         {
-            var user = await _userManager.GetUserAsync(User);
+            var user = await _userService.GetUserAsync(User);
             var model = _albumService.GetUserAlbum(id, user.Id);
             return View(model);
         }
@@ -63,7 +62,7 @@ namespace ImageManager.Controllers
             if (!ModelState.IsValid) return "invalid";
 
             model.Images = new List<Image>();
-            model.User = await _userManager.GetUserAsync(User);
+            model.User = await _userService.GetUserAsync(User);
             await _albumService.AddAsync(model);
             await _unitOfWork.SaveChangesAsync();
             return Url.Action("Detail", "Album", new {model.Id});

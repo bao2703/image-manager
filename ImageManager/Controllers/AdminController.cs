@@ -12,13 +12,15 @@ namespace ImageManager.Controllers
     [Authorize]
     public class AdminController : Controller
     {
+        private readonly CategoryService _categoryService;
         private readonly ImageService _imageService;
         private readonly UserService _userService;
 
-        public AdminController(ImageService imageService, UserService userService)
+        public AdminController(ImageService imageService, UserService userService, CategoryService categoryService)
         {
             _imageService = imageService;
             _userService = userService;
+            _categoryService = categoryService;
         }
 
         [HttpGet]
@@ -55,6 +57,13 @@ namespace ImageManager.Controllers
             };
 
             return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult Categories()
+        {
+            var model = _categoryService.GetAll();
+            return View(model.ToList());
         }
 
         public class AdminModel

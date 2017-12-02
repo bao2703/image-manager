@@ -25,10 +25,12 @@ namespace ImageManager.Data.Seeds
             var imageFaker = new Faker<Image>()
                 .RuleFor(o => o.Path, f => f.Internet.Avatar())
                 .RuleFor(o => o.Name, f => f.Person.FirstName)
-                .RuleFor(o => o.Description, f => f.Lorem.Sentences(2));
+                .RuleFor(o => o.Description, f => f.Lorem.Sentences(2))
+                .RuleFor(o => o.DateCreated, f => f.Date.Past());
 
             var categoryFaker = new Faker<Category>()
-                .RuleFor(o => o.Name, f => f.Commerce.Categories(1)[0]);
+                .RuleFor(o => o.Name, f => f.Commerce.Categories(1)[0])
+                .RuleFor(o => o.DateCreated, f => f.Date.Past());
 
             var category = categoryFaker.Generate(10).ToList();
 
@@ -36,7 +38,8 @@ namespace ImageManager.Data.Seeds
                 .RuleFor(o => o.Name, f => f.Person.FirstName)
                 .RuleFor(o => o.Description, f => f.Lorem.Sentences(5))
                 .RuleFor(o => o.Category, f => f.PickRandom(category))
-                .RuleFor(o => o.Images, f => imageFaker.Generate(f.Random.Number(5, 20)));
+                .RuleFor(o => o.Images, f => imageFaker.Generate(f.Random.Number(5, 20)))
+                .RuleFor(o => o.DateCreated, f => f.Date.Past());
 
             var userFaker = new Faker<User>()
                 .RuleFor(o => o.Name, f => $"{f.Person.FirstName} {f.Person.LastName}")

@@ -3,7 +3,7 @@ let btnDelete = $('#btn-delete');
 let btnCancel = $('#btn-cancel');
 let btnEdit = $('#btn-edit');
 let checkBoxes = $('input[type=checkbox]');
-let card = $('.card');
+let card = $('.img-card');
 let aCard = card.parent('a');
 hideBtn();
 

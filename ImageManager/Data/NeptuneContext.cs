@@ -34,14 +34,12 @@ namespace ImageManager.Data
         private void AddTimestamps()
         {
             var entities = ChangeTracker.Entries().Where(x =>
-                x.Entity is ITimestampEntity && (x.State == EntityState.Added || x.State == EntityState.Modified));
+                x.Entity is Entity && (x.State == EntityState.Added));
 
             foreach (var entity in entities)
             {
-                var e = (ITimestampEntity) entity.Entity;
-                if (entity.State == EntityState.Added)
-                    e.DateCreated = DateTime.Now;
-                e.DateModified = DateTime.Now;
+                var e = (Entity) entity.Entity;
+                e.DateCreated = DateTime.Now;
             }
         }
     }

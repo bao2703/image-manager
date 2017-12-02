@@ -1,5 +1,4 @@
 ﻿@using ImageManager.Services
-@using Microsoft.AspNetCore.Identity
 @inject CategoryService CategoryService
 @inject UserService UserService
 
@@ -33,6 +32,15 @@
                         {
                             <div class="col-6">
                                 <a class="dropdown-item" asp-action="Index" asp-controller="Album" asp-route-categoryId="@item.Id">@item.Name</a>
+                            </div>
+                        }
+                        @if ((await UserService.GetUserAsync(User))?.Role == Role.Admin)
+                        {
+                            <div class="col-6">
+                                <a class="dropdown-item" asp-action="Categories" asp-controller="Admin">
+                                    <i class="fa fa-pencil fa-fw"></i>
+                                    Edit
+                                </a>
                             </div>
                         }
                     </div>

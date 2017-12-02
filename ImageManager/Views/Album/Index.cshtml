@@ -5,41 +5,52 @@
     ViewData["Title"] = "Albums";
 }
 
-<div class="row px-1 my-2">
-    <div class="col-md-12">
-        <button class="btn btn-primary" id="btn-add" data-toggle="modal" data-target="#create-modal">
-            <i class="fa fa-plus"></i>
-            Create new Album
-        </button>
-        @await Html.PartialAsync("_EditPartial")
+<div class="card mt-3">
+    <div class="card-header">
+        <h2>Albums</h2>
+    </div>
+    <div class="card-body">
+        <div class="row px-1 mb-2">
+            <div class="col-md-12">
+                <button class="btn btn-primary" id="btn-add" data-toggle="modal" data-target="#create-modal">
+                    <i class="fa fa-plus"></i>
+                    Create new Album
+                </button>
+                @await Html.PartialAsync("_EditPartial")
+            </div>
+        </div>
+
+        <div class="row no-gutters">
+            @foreach (var item in Model)
+            {
+                <div class="col-6 col-md-3 col-lg-2 p-1">
+                    <a asp-action="Detail" asp-controller="Album" asp-route-id="@item.Id">
+                        <div class="card cusor-pointer img-card">
+                            <input type="checkbox" id="check-@item.Id" name="selectedItems" value="@item.Id" hidden/>
+                            <label for="@item.Id" class="m-0"></label>
+                            <img class="card-img-top img-fluid" src="@item.Images?.FirstOrDefault()?.Path" alt="" data-id="@item.Id" style="height: 175px" asp-append-version="true">
+                            <div class="card-img-overlay p-0 d-block">
+                                <div class="img-detail text-white p-2">
+                                    <div>
+                                        @item.Name
+                                        <i class="fa fa-pencil fa-fw"></i>
+                                    </div>
+                                    <div class="img-description">
+                                        <i class="fa fa-image"></i> @(item.Images?.Count ?? 0)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+            <div class="col-12 p-1">
+                <pager source="Model"/>
+            </div>
+        </div>
     </div>
 </div>
 
-<div class="row no-gutters">
-    @foreach (var item in Model)
-    {
-        <div class="col-6 col-md-3 col-lg-2 p-1">
-            <a asp-action="Detail" asp-controller="Album" asp-route-id="@item.Id">
-                <div class="card cusor-pointer">
-                    <input type="checkbox" id="check-@item.Id" name="selectedItems" value="@item.Id" hidden/>
-                    <label for="@item.Id" class="m-0"></label>
-                    <img class="card-img-top img-fluid" src="@item.Images?.FirstOrDefault()?.Path" alt="" data-id="@item.Id" style="height: 175px" asp-append-version="true">
-                    <div class="card-img-overlay p-0 d-block">
-                        <div class="img-detail text-white p-2">
-                            <div>@item.Name</div>
-                            <div class="img-description">
-                                <i class="fa fa-image"></i> @(item.Images?.Count ?? 0)
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-    }
-    <div class="col-12 p-1">
-        <pager source="Model"/>
-    </div>
-</div>
 
 @await Html.PartialAsync("_CreatePartial")
 
@@ -62,6 +73,10 @@
                     }
                 }
             });
+        });
+        $('.fa').click(function(e) {
+            e.preventDefault();
+            alert("hi");
         });
     </script>
 }

@@ -1,0 +1,44 @@
+﻿@model List<Category>
+@{
+    ViewData["Title"] = "Categories";
+}
+<div class="card mt-3">
+    <div class="card-header">
+        <strong>Categories List</strong>
+        <span class="float-right">
+            <button class="btn btn-outline-primary btn-sm">
+                Create
+            </button>
+        </span>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Date Created</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th scope="row">@item.Id</th>
+                    <td>@item.Name</td>
+                    <td>@item.DateCreated?.ToString("d MMM yyyy")</td>
+                    <td>
+                        <button class="btn btn-outline-primary btn-sm">
+                            Edit
+                        </button>
+                        <button class="btn btn-outline-danger btn-sm">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

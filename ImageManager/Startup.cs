@@ -75,7 +75,7 @@ namespace ImageManager
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
-                //await seeder.InitializeAsync();
+                await seeder.InitializeAsync();
             }
             else
             {

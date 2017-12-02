@@ -3,38 +3,42 @@
 @{
     ViewData["Title"] = $"{Model.Name} Album";
 }
-
-<div class="mt-2">
-    <div class="row px-1 justify-content-center">
-        <div class="col-md-12">
-            <h1>@Model.Name</h1>
-            <div>
-                <i class="fa fa-tag"></i> <a href="#">@Model.Category.Name</a> &nbsp;
-                <i class="fa fa-image"></i> @Model.Images.Count Images &nbsp;
-                <i class="fa fa-calendar"></i> @Model.DateCreated?.ToString("d MMM yyyy") &nbsp;
-                <i class="fa fa-user"></i> by <a href="#">@Model.User.Name</a>
-            </div>
-            <p>
-                @Model.Description
-            </p>
-        </div>
+<div class="card mt-3">
+    <div class="card-header">
+        <h2>@Model.Name</h2>
     </div>
-    <div class="row px-1 mb-2">
-        <div class="col-md-12">
-            <button class="btn btn-primary" id="btn-add" data-toggle="modal" data-target="#upload-modal">
-                <i class="fa fa-plus"></i>
-                Add
-            </button>
-            @await Html.PartialAsync("_EditPartial")
-        </div>
-    </div>
-    <div class="row no-gutters">
-        @foreach (var item in Model.Images)
-        {
-            <div class="col-6 col-md-3 col-lg-2 p-1">
-                @await Html.PartialAsync("_ImagePartial", item)
+    <div class="card-body">
+        <div class="">
+            <div class="row px-1 justify-content-center">
+                <div class="col-md-12">
+                    <div>
+                        <i class="fa fa-tag"></i> <a href="#">@Model.Category.Name</a> &nbsp;
+                        <i class="fa fa-image"></i> @Model.Images.Count Images &nbsp;
+                        <i class="fa fa-calendar"></i> @Model.DateCreated?.ToString("d MMM yyyy") &nbsp;
+                    </div>
+                    <p>
+                        @Model.Description
+                    </p>
+                </div>
             </div>
-        }
+            <div class="row px-1 mb-2">
+                <div class="col-md-12">
+                    <button class="btn btn-primary" id="btn-add" data-toggle="modal" data-target="#upload-modal">
+                        <i class="fa fa-plus"></i>
+                        Add
+                    </button>
+                    @await Html.PartialAsync("_EditPartial")
+                </div>
+            </div>
+            <div class="row no-gutters">
+                @foreach (var item in Model.Images)
+                {
+                    <div class="col-6 col-md-3 col-lg-2 p-1">
+                        @await Html.PartialAsync("_ImagePartial", item)
+                    </div>
+                }
+            </div>
+        </div>
     </div>
 </div>
 
@@ -71,6 +75,10 @@
     <script id="script-edit" src="~/js/edit.js" asp-append-version="true" data-url="@Url.Action("Delete", "Image")"></script>
 
     <script>
+        $('.fa').click(function(e) {
+            e.preventDefault();
+            alert("hi");
+        });
         $(document).ready(() => {
             $("#files").fileinput({
                 showPreview: false,

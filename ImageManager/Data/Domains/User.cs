@@ -10,7 +10,7 @@ namespace ImageManager.Data.Domains
         Admin
     }
 
-    public class User : IdentityUser, ITimestampEntity
+    public class User : IdentityUser
     {
         public string Name { get; set; }
 

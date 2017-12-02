@@ -1,6 +1,6 @@
 @model Image
 
-<div class="card cusor-pointer">
+<div class="card cusor-pointer img-card">
     <input type="checkbox" id="check-@Model.Id" name="selectedItems" value="@Model.Id" hidden/>
     <label for="@Model.Id" class="m-0"></label>
     <img class="card-img-top img-fluid" src="@Model.Path" alt="" data-id="@Model.Id" style="height: 175px" asp-append-version="true">
@@ -8,7 +8,10 @@
     {
         <div class="card-img-overlay p-0">
             <div class="img-detail text-white p-2">
-                <div>@Model.Name</div>
+                <div>
+                    @Model.Name
+                    <i class="fa fa-pencil fa-fw"></i>
+                </div>
                 <div class="img-description">
                     @Model.Description
                 </div>

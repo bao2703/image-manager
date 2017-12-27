@@ -34,10 +34,10 @@
 @section Scripts {
     <script id="script-edit" src="~/js/edit.js" asp-append-version="true" data-url="@Url.Action("Delete", "Image")"></script>
     <script>
-        $('.fa').click(function(e) {
+        $('.fa-pencil').click(function(e) {
             e.preventDefault();
             e.stopPropagation();
-            alert("hi");
+            window.location = `@Url.Action("Edit", "Image")/${$(this).data('id')}`;
         });
     </script>
 }

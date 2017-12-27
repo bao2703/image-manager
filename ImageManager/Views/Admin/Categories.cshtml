@@ -6,9 +6,9 @@
     <div class="card-header">
         <strong>Categories List</strong>
         <span class="float-right">
-            <button class="btn btn-outline-primary btn-sm">
+            <a class="btn btn-outline-primary btn-sm" asp-action="CreateCategory">
                 Create
-            </button>
+            </a>
         </span>
     </div>
     <div class="card-body">
@@ -29,12 +29,12 @@
                     <td>@item.Name</td>
                     <td>@item.DateCreated?.ToString("d MMM yyyy")</td>
                     <td>
-                        <button class="btn btn-outline-primary btn-sm">
+                        <a class="btn btn-outline-primary btn-sm" asp-action="EditCategory" asp-route-id="@item.Id">
                             Edit
-                        </button>
-                        <button class="btn btn-outline-danger btn-sm">
+                        </a>
+                        <a class="btn btn-outline-danger btn-sm" asp-action="DeleteCategory" asp-route-id="@item.Id">
                             Delete
-                        </button>
+                        </a>
                     </td>
                 </tr>
             }

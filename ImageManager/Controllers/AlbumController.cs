@@ -36,7 +36,9 @@ namespace ImageManager.Controllers
             var model = _albumService.GetUserAlbums(user.Id);
 
             if (!string.IsNullOrEmpty(searchString))
-                model = model.Where(x => x.Name.ToLower().Contains(searchString.ToLower()));
+                model = model.Where(x =>
+                    x.Name.ToLower().Contains(searchString.ToLower()) ||
+                    x.Description.ToLower().Contains(searchString.ToLower()));
 
             if (categoryId != null)
             {
@@ -66,6 +68,30 @@ namespace ImageManager.Controllers
             await _albumService.AddAsync(model);
             await _unitOfWork.SaveChangesAsync();
             return Url.Action("Detail", "Album", new {model.Id});
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var model = _albumService.FindById(id);
+            if (model == null) return NotFound();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Album model)
+        {
+            if (!ModelState.IsValid) return View(model);
+
+            var album = _albumService.FindById(model.Id);
+            album.Name = model.Name;
+            album.CategoryId = model.CategoryId;
+            album.Description = model.Description;
+
+            await _unitOfWork.SaveChangesAsync();
+
+            return View(model);
         }
 
         [HttpPost]

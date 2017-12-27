@@ -19,6 +19,13 @@ namespace ImageManager.Data
 
         public DbSet<Category> Categories { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+                relationship.DeleteBehavior = DeleteBehavior.Cascade;
+            base.OnModelCreating(modelBuilder);
+        }
+
         public override int SaveChanges()
         {
             AddTimestamps();
@@ -34,7 +41,7 @@ namespace ImageManager.Data
         private void AddTimestamps()
         {
             var entities = ChangeTracker.Entries().Where(x =>
-                x.Entity is Entity && (x.State == EntityState.Added));
+                x.Entity is Entity && x.State == EntityState.Added);
 
             foreach (var entity in entities)
             {

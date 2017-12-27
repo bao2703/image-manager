@@ -33,7 +33,7 @@
                                 <div class="img-detail text-white p-2">
                                     <div>
                                         @item.Name
-                                        <i class="fa fa-pencil fa-fw"></i>
+                                        <i class="fa fa-pencil fa-fw" data-id="@item.Id"></i>
                                     </div>
                                     <div class="img-description">
                                         <i class="fa fa-image"></i> @(item.Images?.Count ?? 0)
@@ -74,9 +74,9 @@
                 }
             });
         });
-        $('.fa').click(function(e) {
+        $('.fa-pencil').click(function(e) {
             e.preventDefault();
-            alert("hi");
+            window.location = `@Url.Action("Edit", "Album")/${$(this).data('id')}`;
         });
     </script>
 }

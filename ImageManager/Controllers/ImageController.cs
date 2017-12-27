@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using ImageManager.Common;
+using ImageManager.Data.Domains;
 using ImageManager.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -45,6 +46,29 @@ namespace ImageManager.Controllers
             }
             await _unitOfWork.SaveChangesAsync();
             return Ok();
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var model = _imageService.FindById(id);
+            if (model == null) return NotFound();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Image model)
+        {
+            if (!ModelState.IsValid) return View(model);
+
+            var image = _imageService.FindById(model.Id);
+            image.Name = model.Name;
+            image.Description = model.Description;
+
+            await _unitOfWork.SaveChangesAsync();
+
+            return View(model);
         }
     }
 }

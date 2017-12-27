@@ -49,7 +49,7 @@ function showBtn() {
     card.off('click');
     card.on('click',
         function() {
-            const currCheck = $(`#check-${$(this).find('.card-img-top').data('id')}`);
+            const currCheck = $(this).find('input');
             toggleCheckBox(currCheck);
         });
 }

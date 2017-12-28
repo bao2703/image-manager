@@ -12,7 +12,7 @@
             <div class="row px-1 justify-content-center">
                 <div class="col-md-12">
                     <div>
-                        <i class="fa fa-tag"></i> <a href="#">@Model.Category.Name</a> &nbsp;
+                        <i class="fa fa-tag"></i> <a asp-action="Index" asp-route-categoryId="@Model.CategoryId">@Model.Category.Name</a> &nbsp;
                         <i class="fa fa-image"></i> @Model.Images.Count Images &nbsp;
                         <i class="fa fa-calendar"></i> @Model.DateCreated?.ToString("d MMM yyyy") &nbsp;
                     </div>

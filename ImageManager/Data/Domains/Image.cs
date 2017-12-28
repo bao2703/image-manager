@@ -11,6 +11,8 @@ namespace ImageManager.Data.Domains
 
         public string Description { get; set; }
 
+        public int AlbumId { get; set; }
+
         public Album Album { get; set; }
     }
 }

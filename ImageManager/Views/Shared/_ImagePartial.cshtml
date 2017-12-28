@@ -4,18 +4,15 @@
     <input type="checkbox" id="check-@Model.Id" name="selectedItems" value="@Model.Id" hidden/>
     <label for="@Model.Id" class="m-0"></label>
     <img class="card-img-top img-fluid" src="@Model.Path" alt="" data-id="@Model.Id" style="height: 175px" asp-append-version="true">
-    @if (!string.IsNullOrEmpty(Model.Name) || !string.IsNullOrEmpty(Model.Description))
-    {
-        <div class="card-img-overlay p-0">
-            <div class="img-detail text-white p-2">
-                <div>
-                    @Model.Name
-                    <i class="fa fa-pencil fa-fw" data-id="@Model.Id"></i>
-                </div>
-                <div class="img-description">
-                    @Model.Description
-                </div>
+    <div class="card-img-overlay p-0">
+        <div class="img-detail text-white p-2">
+            <div>
+                @Model.Name
+                <i class="fa fa-pencil fa-fw" data-id="@Model.Id"></i>
+            </div>
+            <div class="img-description">
+                @Model.Description
             </div>
         </div>
-    }
+    </div>
 </div>

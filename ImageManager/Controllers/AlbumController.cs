@@ -91,7 +91,7 @@ namespace ImageManager.Controllers
 
             await _unitOfWork.SaveChangesAsync();
 
-            return View(model);
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
